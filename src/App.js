@@ -44,7 +44,7 @@ const App = () => {
       </div>
       {loading && <p>Loading data…</p>} {/* Conditionally render loading message */}
       {error && <p>{error}</p>}
-      {weather && (
+      {weather ? (
         <div className="weather-cards">
           <div className="weather-card">
             <p>Temperature: {weather.current.temp_c} °C</p>
@@ -59,7 +59,7 @@ const App = () => {
             <p>Wind Speed: {weather.current.wind_kph} kph</p>
           </div>
         </div>
-      )}
+      ) : <p>Loading data…</p>}
     </div>
   );
 };
