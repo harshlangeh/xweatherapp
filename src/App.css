@@ -43,3 +43,17 @@ button {
   padding: 3px;
   border: 0px;
 }
+
+.weather-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-card{
+  height: 150px;
+  width: 300px;
+  background-color: antiquewhite;
+  text-align: center;
+  margin: auto;
+}
