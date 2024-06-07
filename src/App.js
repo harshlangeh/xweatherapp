@@ -5,28 +5,28 @@ import './App.css';
 const App = () => {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState('');
 
   const handleSearch = async () => {
     if (!city) return;
     
-    setLoading(true);
+    setLoading(true); // Set loading state to true when search starts
     setError('');
     
     try {
       const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
         params: {
-          key: '5c6ce25dd67e475588c201112240406',  // Replace with your actual API key
+          key: '5c6ce25dd67e475588c201112240406', // Replace with your actual API key
           q: city
         }
       });
       setWeather(response.data);
     } catch (error) {
-      alert('Failed to fetch weather data');
+      setError('Failed to fetch weather data');
       setWeather(null);
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading state to false when search ends
     }
   };
 
@@ -42,7 +42,7 @@ const App = () => {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
-      {loading && <p>Loading data…</p>}
+      {loading && <p>Loading data…</p>} {/* Conditionally render loading message */}
       {error && <p>{error}</p>}
       {weather && (
         <div className="weather-cards">
