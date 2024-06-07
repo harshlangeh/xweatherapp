@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -7,13 +7,10 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [location, setLocation] = useState('');
 
-  const API_KEY = '5c6ce25dd67e475588c201112240406'
+  const API_KEY = '5c6ce25dd67e475588c201112240406';
 
-  useEffect(() => {
-    if (!location) return;
-
+  const fetchWeatherData = (location) => {
     setLoading(true);
     setError('');
     setWeatherData(null);
@@ -30,15 +27,14 @@ function App() {
         setLoading(false);
       })
       .catch(() => {
-        // setError('Failed to fetch weather data');
         alert('Failed to fetch weather data');
         setLoading(false);
       });
-  }, [location]);
+  };
 
   const handleSearch = () => {
     if (city) {
-      setLocation(city);
+      fetchWeatherData(city);
     }
   };
 
@@ -53,30 +49,30 @@ function App() {
       />
       <button onClick={handleSearch}>Search</button>
 
-      {loading ? <p>Loading data…</p> : (
+      {loading ? (
+        <p>Loading data…</p>
+      ) : (
         weatherData && (
           <div className="weather-cards">
-  
             <div className='weather-card'>
-                <h2>Temperature</h2>
-                <p>{weatherData.current.temp_c}°C</p>
+              <h2>Temperature</h2>
+              <p>{weatherData.current.temp_c}°C</p>
             </div>
             <div className='weather-card'>
-                <h2>Humidity</h2>
-                <p>{weatherData.current.humidity}%</p>
+              <h2>Humidity</h2>
+              <p>{weatherData.current.humidity}%</p>
             </div>
             <div className='weather-card'>
-                <h2>Condition</h2>
-                <p>{weatherData.current.condition.text}</p>
+              <h2>Condition</h2>
+              <p>{weatherData.current.condition.text}</p>
             </div>
             <div className='weather-card'>
-                <h2>Wind Speed</h2>
-                <p>{weatherData.current.wind_kph} kph</p>
+              <h2>Wind Speed</h2>
+              <p>{weatherData.current.wind_kph} kph</p>
             </div>
           </div>
-      ))}
-
-
+        )
+      )}
     </div>
   );
 }
