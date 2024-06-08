@@ -5,28 +5,25 @@ import './App.css';
 const App = () => {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     if (!city) return;
     
-    setLoading(true); // Set loading state to true when search starts
-    setError('');
-    
     try {
+      setLoading(true);
       const response = await axios.get('https://api.weatherapi.com/v1/current.json', {
         params: {
-          key: '5c6ce25dd67e475588c201112240406', // Replace with your actual API key
+          key: '5c6ce25dd67e475588c201112240406',
           q: city
         }
       });
       setWeather(response.data);
     } catch (error) {
-      setError('Failed to fetch weather data');
+      alert('Failed to fetch weather data');
       setWeather(null);
     } finally {
-      setLoading(false); // Set loading state to false when search ends
+      setLoading(false);
     }
   };
 
@@ -42,24 +39,26 @@ const App = () => {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
-      {loading && <p>Loading data…</p>} {/* Conditionally render loading message */}
-      {error && <p>{error}</p>}
-      {weather ? (
+      { loading ? <p>Loading data…</p> : weather ? (
         <div className="weather-cards">
           <div className="weather-card">
-            <p>Temperature: {weather.current.temp_c} °C</p>
+            <h1>Temperature </h1>
+            <p>{weather.current.temp_c} °C</p>
           </div>
           <div className="weather-card">
-            <p>Humidity: {weather.current.humidity} %</p>
+            <h1>Humidity </h1>
+            <p>{weather.current.humidity} %</p>
           </div>
           <div className="weather-card">
-            <p>Condition: {weather.current.condition.text}</p>
+            <h1>Condition</h1>
+            <p>{weather.current.condition.text}</p>
           </div>
           <div className="weather-card">
-            <p>Wind Speed: {weather.current.wind_kph} kph</p>
+            <h1>Wind Speed</h1>
+            <p>{weather.current.wind_kph} kph</p>
           </div>
         </div>
-      ) : <p>Loading data…</p>}
+      ) : "Please enter a city in the search box"}
     </div>
   );
 };
